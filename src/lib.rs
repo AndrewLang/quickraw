@@ -58,6 +58,7 @@
 pub const BENCH_FLAG: &str = "QUICKRAW_BENCH";
 
 use thiserror::Error;
+use std::fs;
 
 pub mod data;
 
@@ -68,6 +69,8 @@ mod maker;
 mod decode;
 pub use decode::decode_file;
 pub use decode::decode_buffer;
+pub use decode::get_thumbnail;
+pub use decode::Orientation;
 
 #[cfg(feature = "wasm-bindgen")]
 mod lib_wasm;
@@ -155,4 +158,28 @@ pub enum RawFileReadingError {
     MakerIsNotSupportedYet(String),
     #[error("This raw file model: '{0}' is not supported yet.")]
     ModelIsNotSupportedYet(String),
+}
+
+pub struct Export;
+
+impl Export {
+    /// Export embedded thumbnail bytes from a raw buffer.
+    pub fn export_thumbnail_data(buffer: &[u8]) -> Result<(Vec<u8>, Orientation), RawFileReadingError> {
+        let (thumbnail, orientation) = decode::get_thumbnail(buffer)?;
+        Ok((thumbnail.to_vec(), orientation))
+    }
+
+    /// Export embedded thumbnail bytes from a raw file.
+    pub fn export_thumbnail_data_from_file(path: &str) -> Result<(Vec<u8>, Orientation), RawFileReadingError> {
+        let buffer = fs::read(path)
+            .map_err(|_| RawFileReadingError::FileContentReadingError(path.to_owned()))?;
+        Self::export_thumbnail_data(&buffer)
+    }
+
+    /// Export embedded thumbnail to a file.
+    pub fn export_thumbnail_to_file(raw_path: &str, out_path: &str) -> Result<(), RawFileReadingError> {
+        let (thumbnail, _orientation) = Self::export_thumbnail_data_from_file(raw_path)?;
+        fs::write(out_path, thumbnail)
+            .map_err(|_| RawFileReadingError::FileContentReadingError(out_path.to_owned()))
+    }
 }

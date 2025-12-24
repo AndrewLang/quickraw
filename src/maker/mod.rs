@@ -5,6 +5,7 @@ pub(super) mod selector;
 mod utility;
 
 mod adobe;
+mod canon;
 mod decode_utility;
 mod fujifilm;
 mod nikon;
@@ -49,6 +50,7 @@ pub(super) trait RawDecoder {
         }
     }
     fn decode_with_preprocess(&self, buffer: &[u8]) -> Result<Vec<u16>, DecodingError>;
+    #[allow(dead_code)]
     fn get_thumbnail<'a>(&self, buffer: &'a [u8]) -> Result<&'a [u8], DecodingError>;
     fn get_cfa_pattern(&self) -> Result<CFAPattern, DecodingError> {
         let cfa_pattern = self.get_info().u8a4("cfa_pattern")?;

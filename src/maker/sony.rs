@@ -165,7 +165,7 @@ fn gen_curve_lut(tone_curve: &[u16]) -> LookupTable {
     let mut table = vec![0u16; curve[5] + 1];
     for i in 0..5 {
         for j in (curve[i] + 1)..(curve[i + 1] + 1) {
-            table[j] = table[(j - 1)] + (1 << i);
+            table[j] = table[j - 1] + (1 << i);
         }
     }
 

@@ -8,7 +8,7 @@ fn str_from_cchar<'a>(ptr: *mut c_char) -> &'a str {
     s.to_str().unwrap()
 }
 fn free_cstring(ptr: *mut c_char) {
-    unsafe { CString::from_raw(ptr) };
+    unsafe { let _ = CString::from_raw(ptr); };
 }
 fn gen_cstring(s: String) -> *mut c_char {
     CString::new(s).unwrap().into_raw()

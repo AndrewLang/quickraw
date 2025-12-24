@@ -1,3 +1,5 @@
+#![allow(dead_code)]
+
 pub(super) trait GetNumFromBytes {
     fn u16(&self, is_le: bool, start: usize) -> u16;
     fn u16le(&self, start: usize) -> u16;

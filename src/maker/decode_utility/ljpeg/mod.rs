@@ -129,7 +129,7 @@ pub struct LjpegDecompressor<'a> {
 }
 
 impl<'a> LjpegDecompressor<'a> {
-    pub fn new(src: &'a [u8]) -> Result<LjpegDecompressor, DecodingError> {
+    pub fn new(src: &'a [u8]) -> Result<LjpegDecompressor<'a>, DecodingError> {
         LjpegDecompressor::new_full(src, false, false)
             .map_err(|err| DecodingError::LJpegErrorConstructor(err))
     }
@@ -138,7 +138,7 @@ impl<'a> LjpegDecompressor<'a> {
         src: &'a [u8],
         dng_bug: bool,
         csfix: bool,
-    ) -> Result<LjpegDecompressor, String> {
+    ) -> Result<LjpegDecompressor<'a>, String> {
         let mut input = ByteStream::new(src, false);
         if LjpegDecompressor::get_next_marker(&mut input, false)? != m(Marker::SOI) {
             return Err("ljpeg: Image did not start with SOI. Probably not LJPEG".to_string());

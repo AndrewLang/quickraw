@@ -9,7 +9,7 @@ pub(in super::super) struct BitPumpMSB<'a> {
 }
 
 impl<'a> BitPumpMSB<'a> {
-    pub(in super::super) fn new(src: &'a [u8]) -> BitPumpMSB {
+    pub(in super::super) fn new(src: &'a [u8]) -> BitPumpMSB<'a> {
         BitPumpMSB {
             buffer: src,
             pos: 0,
@@ -28,7 +28,7 @@ pub(in super::super) struct BitPumpMSB32<'a> {
 }
 
 impl<'a> BitPumpMSB32<'a> {
-    pub(in super::super) fn new(src: &'a [u8]) -> BitPumpMSB32 {
+    pub(in super::super) fn new(src: &'a [u8]) -> BitPumpMSB32<'a> {
         BitPumpMSB32 {
             buffer: src,
             pos: 0,
@@ -71,7 +71,7 @@ pub(in super::super) struct BitPumpJPEG<'a> {
 }
 
 impl<'a> BitPumpJPEG<'a> {
-    pub(in super::super) fn new(src: &'a [u8]) -> BitPumpJPEG {
+    pub(in super::super) fn new(src: &'a [u8]) -> BitPumpJPEG<'a> {
         BitPumpJPEG {
             buffer: src,
             pos: 0,
@@ -148,7 +148,7 @@ pub(in super::super) struct BitPumpLSB<'a> {
 }
 
 impl<'a> BitPumpLSB<'a> {
-    pub(in super::super) fn new(src: &'a [u8]) -> BitPumpLSB {
+    pub(in super::super) fn new(src: &'a [u8]) -> BitPumpLSB<'a> {
         BitPumpLSB {
             buffer: src,
             pos: 0,
@@ -166,7 +166,7 @@ pub(in super::super) struct BitPumpPanasonic<'a> {
 }
 
 impl<'a> BitPumpPanasonic<'a> {
-    pub(in super::super) fn new(src: &'a [u8], split: bool) -> BitPumpPanasonic {
+    pub(in super::super) fn new(src: &'a [u8], split: bool) -> BitPumpPanasonic<'a> {
         BitPumpPanasonic {
             buffer: src,
             pos: 0,
@@ -204,6 +204,7 @@ pub(in super::super) trait BitPump {
 
     // Sign extend ibits
     #[inline(always)]
+    #[allow(dead_code)]
     fn get_ibits_sextended(&mut self, num: u32) -> i32 {
         let val = self.get_ibits(num);
         val.wrapping_shl(32 - num).wrapping_shr(32 - num)

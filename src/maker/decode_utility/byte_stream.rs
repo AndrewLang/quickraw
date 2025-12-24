@@ -10,7 +10,7 @@ pub(in super::super) struct ByteStream<'a> {
 }
 
 impl<'a> ByteStream<'a> {
-    pub(in super::super) fn new(src: &'a [u8], is_le: bool) -> ByteStream {
+    pub(in super::super) fn new(src: &'a [u8], is_le: bool) -> ByteStream<'a> {
         ByteStream {
             buffer: src,
             pos: 0,

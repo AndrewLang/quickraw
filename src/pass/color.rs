@@ -1,3 +1,5 @@
+#![allow(dead_code)]
+
 use std::cmp;
 
 const BIT_SHIFT: u32 = 13u32;

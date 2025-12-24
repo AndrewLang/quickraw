@@ -48,6 +48,7 @@ pub(in super::super) fn select_and_decode_exif_info(
 
     let rule = match dng_version {
         None => match make {
+            "Canon" | "CANON" | "Canon Inc." => Ok(&canon::IMAGE_RULE),
             "NIKON" | "NIKON CORPORATION" => Ok(&nikon::IMAGE_RULE),
             "SONY" => Ok(&sony::IMAGE_RULE),
             "Panasonic" => Ok(&panasonic::IMAGE_RULE),
@@ -65,6 +66,7 @@ pub(in super::super) fn select_and_decode_exif_info(
     )?)
 }
 
+#[allow(dead_code)]
 pub(in super::super) fn select_and_decode_thumbnail(
     file_buffer: &[u8],
     basic_info: quickexif::ParsedInfo,
@@ -84,6 +86,7 @@ pub(in super::super) fn select_and_decode_thumbnail(
 
     match dng_version {
         None => match make {
+            "Canon" | "CANON" | "Canon Inc." => Ok(decode!(canon)),
             "NIKON" | "NIKON CORPORATION" => Ok(decode!(nikon)),
             "SONY" => Ok(decode!(sony)),
             "Panasonic" => Ok(decode!(panasonic)),

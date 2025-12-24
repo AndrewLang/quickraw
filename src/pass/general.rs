@@ -1,3 +1,5 @@
+#![allow(dead_code)]
+
 
 #[inline(always)]
 pub fn u16rgb_to_i32rgb(iter: impl Iterator<Item = [u16; 3]>) -> impl Iterator<Item = [i32; 3]> {

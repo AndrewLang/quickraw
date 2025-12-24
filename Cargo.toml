@@ -16,10 +16,14 @@ anyhow = "1"
 once_cell = "1"
 phf = { version = "0.10", features = ["macros"] }
 quickexif = "0.1"
+log = "0.4"
+env_logger = "0.11"
 
 # only for wasm target
 wasm-bindgen = { version = "0.2", optional = true }
-image = { version = "0.24", default-features = false, features = ["jpeg"], optional = true }
+image = { version = "0.24", default-features = false, features = [
+    "jpeg",
+], optional = true }
 
 [features]
 wasm = ["wasm-bindgen", "image"]
